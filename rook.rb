@@ -25,6 +25,7 @@ class Rook < Piece
                         return false
                     end
                 end
+                return true
             elsif col_i == col_n
                 if row_i > row_n 
                     enum = (row_n + 1..row_i - 1)
@@ -36,8 +37,8 @@ class Rook < Piece
                         return false
                     end
                 end
+                return true
             end
-            return true
         else
             return false
         end
