@@ -1,6 +1,7 @@
 require './king.rb'
-require './pawn.rb'
 require './queen.rb'
+require './knight.rb'
+require './pawn.rb'
 
 class Board
     SIZE = 8
@@ -46,26 +47,26 @@ class Board
 
     def populate
         @board = Array.new(SIZE){Array.new(SIZE)}
-        add(Queen.new('white'), 'c4')
+        add(Knight.new('white'), 'c4')
         add(nil, 'a1')
-        add(nil, 'b1')
+        add(Knight.new('white'), 'b1')
         add(nil, 'c1')
         add(Queen.new('white'), 'd1')
         add(King.new('white'), 'e1')
         add(nil, 'f1')
-        add(nil, 'g1')
+        add(Knight.new('white'), 'g1')
         add(nil, 'h1')
         8.times do |i|
             add(Pawn.new('white'), "#{('a'.ord + i).chr}2")
         end
 
         add(nil, 'a8')
-        add(nil, 'b8')
+        add(Knight.new('black'), 'b8')
         add(nil, 'c8')
         add(Queen.new('black'), 'd8')
         add(King.new('black'), 'e8')
         add(nil, 'f8')
-        add(nil, 'g8')
+        add(Knight.new('black'), 'g8')
         add(nil, 'h8')
         8.times do |i|
             add(Pawn.new('black'), "#{('a'.ord + i).chr}7")
@@ -99,7 +100,7 @@ class Board
         
         if !get_piece(new_space).nil? 
             if get_piece(new_space).color == get_piece(old_space).color
-                return "Invalid move!"
+                return "Space taken!"
             elsif get_piece(new_space).id == "king"
                 return "VICTORY"
             end
