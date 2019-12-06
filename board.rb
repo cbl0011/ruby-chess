@@ -36,6 +36,9 @@ class Board
 
     def parse_space(space_string)
         begin
+            if space_string.length > 2
+                return nil
+            end
             let = space_string[0].downcase
             num = space_string[1].downcase.to_i
             if let < 'a' || let > 'h' || num < 1 || num > SIZE

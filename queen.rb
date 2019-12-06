@@ -37,13 +37,10 @@ class Queen < Piece
                     end
                 end
             elsif (row_i - row_n).abs == (col_i - col_n).abs
-                if row_i > row_n 
-                    enum = (row_n + 1..row_i - 1)
-                else
-                    enum = (row_i + 1..row_n - 1)
-                end
-                enum.each do |i|
-                    if board[i][i]
+                row_change = (row_n - row_i).abs / (row_n - row_i)
+                col_change = (col_n - col_i).abs / (col_n - col_i)
+                (row_i - row_n).abs.times do |i|
+                    if board[row_i + row_change][col_i + col_change]
                         return false
                     end
                 end
