@@ -52,33 +52,38 @@ class Board
 
     def populate
         @board = Array.new(SIZE){Array.new(SIZE)}
-        add(Rook.new('white'), 'a1')
-        add(Knight.new('white'), 'b1')
-        add(Bishop.new('white'), 'c1')
-        add(Queen.new('white'), 'd1')
-        add(King.new('white'), 'e1')
-        add(Bishop.new('white'), 'f1')
-        add(Knight.new('white'), 'g1')
-        add(Rook.new('white'), 'h1')
-        8.times do |i|
-            add(Pawn.new('white'), "#{('a'.ord + i).chr}2")
-        end
+        # add(Rook.new('white'), 'a1')
+        # add(Knight.new('white'), 'b1')
+        # add(Bishop.new('white'), 'c1')
+        # add(Queen.new('white'), 'd1')
+        # add(King.new('white'), 'e1')
+        # add(Bishop.new('white'), 'f1')
+        # add(Knight.new('white'), 'g1')
+        # add(Rook.new('white'), 'h1')
+        # 8.times do |i|
+        #     add(Pawn.new('white'), "#{('a'.ord + i).chr}2")
+        # end
 
-        add(Rook.new('black'), 'a8')
-        add(Knight.new('black'), 'b8')
-        add(Bishop.new('black'), 'c8')
-        add(Queen.new('black'), 'd8')
+        # add(Rook.new('black'), 'a8')
+        # add(Knight.new('black'), 'b8')
+        # add(Bishop.new('black'), 'c8')
+        # add(Queen.new('black'), 'd8')
+        # add(King.new('black'), 'e8')
+        # add(Bishop.new('black'), 'f8')
+        # add(Knight.new('black'), 'g8')
+        # add(Rook.new('black'), 'h8')
+        # 8.times do |i|
+        #     add(Pawn.new('black'), "#{('a'.ord + i).chr}7")
+        # end
+        add(Pawn.new('white'), 'a6')
+        add(King.new('white'), 'e1')
+
         add(King.new('black'), 'e8')
-        add(Bishop.new('black'), 'f8')
-        add(Knight.new('black'), 'g8')
-        add(Rook.new('black'), 'h8')
-        8.times do |i|
-            add(Pawn.new('black'), "#{('a'.ord + i).chr}7")
-        end
+        add(Pawn.new('black'), 'e7')
     end
 
     def remove(space)
-        add(nil, space)
+        add(nil, space) 
     end
 
     def add(piece, space)
@@ -100,6 +105,12 @@ class Board
         if old_space.nil? || new_space.nil? || 
             !get_piece(old_space).isValidMove?(old_space, new_space, @board)
             return "Invalid move!"
+        end
+
+        if get_piece(old_space) && get_piece(old_space).id == "pawn" && 
+                (new_space[0] == 0 || new_space[0] == 7)
+            p_color = get_piece(old_space).color
+            @board[old_space[0]][old_space[1]] = Queen.new(p_color)
         end
         
         if !get_piece(new_space).nil? 

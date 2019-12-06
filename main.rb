@@ -26,6 +26,6 @@ while true
         end
         puts b.move(move, space)
     end
-    break if win
     puts b.get_board_string
+    break if win
 end
