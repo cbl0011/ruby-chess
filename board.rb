@@ -1,5 +1,6 @@
 require './king.rb'
 require './pawn.rb'
+require './queen.rb'
 
 class Board
     SIZE = 8
@@ -45,11 +46,11 @@ class Board
 
     def populate
         @board = Array.new(SIZE){Array.new(SIZE)}
-        add(Pawn.new('white'), 'a6')
+        add(Queen.new('white'), 'c4')
         add(nil, 'a1')
         add(nil, 'b1')
         add(nil, 'c1')
-        add(nil, 'd1')
+        add(Queen.new('white'), 'd1')
         add(King.new('white'), 'e1')
         add(nil, 'f1')
         add(nil, 'g1')
@@ -61,7 +62,7 @@ class Board
         add(nil, 'a8')
         add(nil, 'b8')
         add(nil, 'c8')
-        add(nil, 'd8')
+        add(Queen.new('black'), 'd8')
         add(King.new('black'), 'e8')
         add(nil, 'f8')
         add(nil, 'g8')
