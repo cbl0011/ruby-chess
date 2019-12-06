@@ -52,34 +52,29 @@ class Board
 
     def populate
         @board = Array.new(SIZE){Array.new(SIZE)}
-        # add(Rook.new('white'), 'a1')
-        # add(Knight.new('white'), 'b1')
-        # add(Bishop.new('white'), 'c1')
-        # add(Queen.new('white'), 'd1')
-        # add(King.new('white'), 'e1')
-        # add(Bishop.new('white'), 'f1')
-        # add(Knight.new('white'), 'g1')
-        # add(Rook.new('white'), 'h1')
-        # 8.times do |i|
-        #     add(Pawn.new('white'), "#{('a'.ord + i).chr}2")
-        # end
-
-        # add(Rook.new('black'), 'a8')
-        # add(Knight.new('black'), 'b8')
-        # add(Bishop.new('black'), 'c8')
-        # add(Queen.new('black'), 'd8')
-        # add(King.new('black'), 'e8')
-        # add(Bishop.new('black'), 'f8')
-        # add(Knight.new('black'), 'g8')
-        # add(Rook.new('black'), 'h8')
-        # 8.times do |i|
-        #     add(Pawn.new('black'), "#{('a'.ord + i).chr}7")
-        # end
-        add(Pawn.new('white'), 'a6')
+        add(Rook.new('white'), 'a1')
+        add(Knight.new('white'), 'b1')
+        add(Bishop.new('white'), 'c1')
+        add(Queen.new('white'), 'd1')
         add(King.new('white'), 'e1')
+        add(Bishop.new('white'), 'f1')
+        add(Knight.new('white'), 'g1')
+        add(Rook.new('white'), 'h1')
+        8.times do |i|
+            add(Pawn.new('white'), "#{('a'.ord + i).chr}2")
+        end
 
+        add(Rook.new('black'), 'a8')
+        add(Knight.new('black'), 'b8')
+        add(Bishop.new('black'), 'c8')
+        add(Queen.new('black'), 'd8')
         add(King.new('black'), 'e8')
-        add(Pawn.new('black'), 'e7')
+        add(Bishop.new('black'), 'f8')
+        add(Knight.new('black'), 'g8')
+        add(Rook.new('black'), 'h8')
+        8.times do |i|
+            add(Pawn.new('black'), "#{('a'.ord + i).chr}7")
+        end
     end
 
     def remove(space)
