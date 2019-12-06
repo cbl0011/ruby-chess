@@ -1,9 +1,10 @@
 class Piece
-    attr_reader :color, :sym
+    attr_reader :color, :sym, :id
 
-    def initialize(color, symbol)
+    def initialize(color, symbol, id)
         @color = color
         @sym = symbol
+        @id = id
     end
 
     def show

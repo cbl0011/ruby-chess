@@ -5,7 +5,7 @@ BLACK_KING = "♚"
 
 class King < Piece
     def initialize(c)
-        super(c, c.downcase == 'white' ? WHITE_KING : BLACK_KING)
+        super(c, c.downcase == 'white' ? WHITE_KING : BLACK_KING, "king")
     end
 
     def isValidMove?(current_space, next_space, board)

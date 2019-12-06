@@ -79,12 +79,32 @@ class Board
     end
 
     def get_piece(space)
-        space_coords = parse_space(space)
-        @board[space_coords[0]][space_coords[1]]
+        if space.is_a? String
+            space = parse_space(space)
+        end
+        @board[space[0]][space[1]]
+    end
+
+    def move(old_space, new_space)
+        old_space = parse_space(old_space)
+        new_space = parse_space(new_space)
+
+        if old_space.nil? || new_space.nil? || 
+            !get_piece(old_space).isValidMove?(old_space, new_space, @board)
+            return "Invalid move!"
+        end
+        
+        if !get_piece(new_space).nil? 
+            if get_piece(new_space).color == get_piece(old_space).color
+                return "Invalid move!"
+            elsif get_piece(new_space).id == "king"
+                return "VICTORY"
+            end
+        end
+
+        @board[new_space[0]][new_space[1]] = @board[old_space[0]][old_space[1]]
+        @board[old_space[0]][old_space[1]] = nil
+        puts "#{old_space.to_s} moved to #{new_space.to_s}"
+        true
     end
 end
-
-b = Board.new
-b.populate
-puts b.get_board_string
-puts b.get_piece('e1').isValidMove?(b.parse_space('e1'),b.parse_space('e1'), b.board)
