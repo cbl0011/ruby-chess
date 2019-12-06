@@ -1,6 +1,7 @@
 require './king.rb'
 require './queen.rb'
 require './knight.rb'
+require './bishop.rb'
 require './rook.rb'
 require './pawn.rb'
 
@@ -48,13 +49,12 @@ class Board
 
     def populate
         @board = Array.new(SIZE){Array.new(SIZE)}
-        add(Rook.new('white'), 'c4')
         add(Rook.new('white'), 'a1')
         add(Knight.new('white'), 'b1')
-        add(nil, 'c1')
+        add(Bishop.new('white'), 'c1')
         add(Queen.new('white'), 'd1')
         add(King.new('white'), 'e1')
-        add(nil, 'f1')
+        add(Bishop.new('white'), 'f1')
         add(Knight.new('white'), 'g1')
         add(Rook.new('white'), 'h1')
         8.times do |i|
@@ -63,10 +63,10 @@ class Board
 
         add(Rook.new('black'), 'a8')
         add(Knight.new('black'), 'b8')
-        add(nil, 'c8')
+        add(Bishop.new('black'), 'c8')
         add(Queen.new('black'), 'd8')
         add(King.new('black'), 'e8')
-        add(nil, 'f8')
+        add(Bishop.new('black'), 'f8')
         add(Knight.new('black'), 'g8')
         add(Rook.new('black'), 'h8')
         8.times do |i|
