@@ -1,4 +1,5 @@
 require './king.rb'
+require './pawn.rb'
 
 class Board
     SIZE = 8
@@ -44,6 +45,7 @@ class Board
 
     def populate
         @board = Array.new(SIZE){Array.new(SIZE)}
+        add(Pawn.new('white'), 'a6')
         add(nil, 'a1')
         add(nil, 'b1')
         add(nil, 'c1')
@@ -53,7 +55,7 @@ class Board
         add(nil, 'g1')
         add(nil, 'h1')
         8.times do |i|
-            add(nil, "#{('a'.ord + i).chr}2")
+            add(Pawn.new('white'), "#{('a'.ord + i).chr}2")
         end
 
         add(nil, 'a8')
@@ -65,7 +67,7 @@ class Board
         add(nil, 'g8')
         add(nil, 'h8')
         8.times do |i|
-            add(nil, "#{('a'.ord + i).chr}7")
+            add(Pawn.new('black'), "#{('a'.ord + i).chr}7")
         end
     end
 
