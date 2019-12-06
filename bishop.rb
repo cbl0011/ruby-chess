@@ -17,15 +17,15 @@ class Bishop < Piece
             if (row_i - row_n).abs == (col_i - col_n).abs
                 row_change = (row_n - row_i).abs / (row_n - row_i)
                 col_change = (col_n - col_i).abs / (col_n - col_i)
-                (row_i - row_n).abs.times do |i|
-                    if board[row_i + row_change][col_i + col_change]
+                ((row_i - row_n).abs - 1).times do |i|
+                    i = i + 1
+                    if board[row_i + row_change * i][col_i + col_change * i]
                         return false
                     end
                 end
+                return true
             end
-            return true
-        else
-            return false
         end
+        false
     end
 end

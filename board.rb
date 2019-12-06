@@ -52,6 +52,7 @@ class Board
 
     def populate
         @board = Array.new(SIZE){Array.new(SIZE)}
+        add(Queen.new('white'), 'a5')
         add(Rook.new('white'), 'a1')
         add(Knight.new('white'), 'b1')
         add(Bishop.new('white'), 'c1')

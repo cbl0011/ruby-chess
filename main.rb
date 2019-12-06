@@ -7,7 +7,7 @@ while true
     while true
         print "Piece to move: "
         move = gets.chomp
-        if b.get_piece(move).nil?
+        if b.parse_space(move).nil? || b.get_piece(move).nil?
             puts "No piece to move!\n\n"
             next
         end
