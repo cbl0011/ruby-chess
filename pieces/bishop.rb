@@ -1,4 +1,4 @@
-require './piece.rb'
+require './pieces/piece.rb'
 
 WHITE_BISHOP = "♗"
 BLACK_BISHOP = "♝"
