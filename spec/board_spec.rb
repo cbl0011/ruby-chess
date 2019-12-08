@@ -12,7 +12,7 @@ describe Board do
                         [nil, nil, nil, nil, nil, nil, nil, nil],
                         [nil, nil, nil, nil, nil, nil, nil, nil],
                         [nil, nil, nil, nil, nil, nil, nil, nil]]
-            expect(b.board).to eq(expected)
+            expect(b.grid).to eq(expected)
         end
         
     end
