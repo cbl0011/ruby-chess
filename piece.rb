@@ -12,12 +12,13 @@ WHITE_KING = "♔"
 BLACK_KING = "♚"
 
 class Piece
-    attr_reader :color, :op_color, :symbol, :type, :space, :id
+    attr_reader :color, :op_color, :symbol, :type, :space, :id, :moves
 
     def initialize(color, space)
         @color = color
         @op_color = (color == :white ? :black : :white)
         @space = space
+        @moves = 0
     end
 
     def name
@@ -29,6 +30,7 @@ class Piece
     end
 
     def move(space)
+        @moves += 1
         @space = space
     end
 end
@@ -107,7 +109,11 @@ class Pawn < Piece
     end
 
     def possible_moves
-        @color == :white ? [[1,0], [1,1], [1,-1], [2,0]] : 
-            [[-1,0], [-1,1], [-1,-1], [-2,0]]
+        move_set = (@color == :white ? [[1,0], [1,1], [1,-1]] : 
+        [[-1,0], [-1,1], [-1,-1]])
+        if @moves == 0
+            move_set << (@color == :white ? [2,0] : [-2,0])
+        end
+        move_set
     end
 end

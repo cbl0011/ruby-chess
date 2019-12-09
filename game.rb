@@ -35,6 +35,7 @@ class Game
 
     def next_turn
         @player = (@player == :white ? :black : :white)
+        puts "\e[H\e[2J"
     end
 
     def get_spaces
@@ -48,7 +49,7 @@ class Game
         print "Moving #{piece_selected} to space: "
 
         space_input = space_to_coord(gets.chomp)
-        while !(valid_move(piece_selected, space_input))
+        while !(valid_move?(piece_selected, space_input))
             print "Invalid space!\nMoving #{piece_selected} to space: "
             space_input = space_to_coord(gets.chomp)
         end
@@ -78,10 +79,24 @@ class Game
         end
     end
 
-    def valid_move(piece, space)
-        space = @board.get_piece(space)
-        if space.nil? || space.color != @player
-            return true
+    def valid_move?(piece, new_space)
+        new_piece = @board.get_piece(new_space)
+        if new_piece.nil? || new_piece.color != @player
+            if piece.type == :slide
+                puts "Slide"
+            else
+                piece.possible_moves.each do |coord|
+                    possible_space = [coord[0] + piece.space[0], coord[1] + piece.space[1]]
+                    if possible_space == new_space
+                        if piece.id == :pawn && coord[1] != 0
+                            if new_piece.nil?
+                                return false
+                            end
+                        end
+                        return true
+                    end
+                end
+            end
         end
         return false
     end
