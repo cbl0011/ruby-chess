@@ -7,7 +7,6 @@ TODO:
     - Check
     - Checkmate
     - Draw
-    - Pawn initial double
     - Pawn promotion
     - Castling
     - Saving

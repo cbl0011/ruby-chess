@@ -3,7 +3,7 @@ require './piece.rb'
 SIZE = 8
 
 class Board
-    attr_reader :grid
+    attr_reader :grid, :pieces, :white_king, :black_king
 
     # Initialize the board
     # new_board (optional) - Board to be created 
@@ -15,6 +15,7 @@ class Board
             @grid = Array.new(SIZE){Array.new(SIZE)}
             populate
         end
+        @pieces = @grid.flatten.select {|p| p}
     end
 
     def populate
@@ -22,7 +23,7 @@ class Board
         @grid[0][1] = Knight.new(:white, [0,1])
         @grid[0][2] = Bishop.new(:white, [0,2])
         @grid[0][3] = Queen.new(:white, [0,3])
-        @grid[0][4] = King.new(:white, [0,4])
+        @grid[0][4] = @white_king = King.new(:white, [0,4])
         @grid[0][5] = Bishop.new(:white, [0,5])
         @grid[0][6] = Knight.new(:white, [0,6])
         @grid[0][7] = Rook.new(:white, [0,7])
@@ -34,7 +35,7 @@ class Board
         @grid[7][1] = Knight.new(:black, [7,1])
         @grid[7][2] = Bishop.new(:black, [7,2])
         @grid[7][3] = Queen.new(:black, [7,3])
-        @grid[7][4] = King.new(:black, [7,4])
+        @grid[7][4] = @black_king = King.new(:black, [7,4])
         @grid[7][5] = Bishop.new(:black, [7,5])
         @grid[7][6] = Knight.new(:black, [7,6])
         @grid[7][7] = Rook.new(:black, [7,7])
@@ -49,21 +50,34 @@ class Board
     end
 
     def move_piece(piece, coords)
+        @pieces.delete(get_piece([coords[0], coords[1]]))
+        puts @pieces.map{|x| x.to_s}.to_s
+
         @grid[piece.space[0]][piece.space[1]] = nil
         @grid[coords[0]][coords[1]] = piece
         piece
     end
 
+    def get_king(color)
+        if color == :white
+            return @white_king
+        elsif color == :black
+            return @black_king
+        else
+            return nil
+        end
+    end
+
     def to_s
-        str = "  ┌───┬───┬───┬───┬───┬───┬───┬───┐\n8 │"
+        str = "   ┌───┬───┬───┬───┬───┬───┬───┬───┐\n 8 │"
         @grid.each_with_index do |row, i|
-            str += "\n  ├───┼───┼───┼───┼───┼───┼───┼───┤\n#{8-i} │" if i > 0
+            str += "\n   ├───┼───┼───┼───┼───┼───┼───┼───┤\n #{8-i} │" if i > 0
             row.each do |piece|
                 piece = " " if piece.nil?
                 str += " #{piece.to_s} │"
             end
         end
-        str += "\n  └───┴───┴───┴───┴───┴───┴───┴───┘"
-        str += "\n    a   b   c   d   e   f   g   h"
+        str += "\n   └───┴───┴───┴───┴───┴───┴───┴───┘"
+        str += "\n     a   b   c   d   e   f   g   h"
     end
 end

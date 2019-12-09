@@ -1,7 +1,7 @@
 require './board.rb'
 
 class Game
-    attr_reader :player, :board
+    attr_reader :player, :board, :gameover
 
     def initialize
         start
@@ -9,6 +9,7 @@ class Game
     end
 
     def start
+        @gameover = false
         puts "Hello, welcome to chess! Use a1-h8 to choose spaces."
 
         # print "New game (1) or load game (2) : "
@@ -35,7 +36,6 @@ class Game
 
     def next_turn
         @player = (@player == :white ? :black : :white)
-        puts "\e[H\e[2J"
     end
 
     def get_spaces
@@ -80,10 +80,15 @@ class Game
     end
 
     def valid_move?(piece, new_space)
+        old_space = piece.space
         new_piece = @board.get_piece(new_space)
         if new_piece.nil? || new_piece.color != @player
             if piece.type == :slide
-                puts "Slide"
+                movement = [new_space[0] - old_space[0], new_space[1] - old_space[1]]
+                distance = (movement[0].abs > movement[1].abs ? movement[0] : movement[1])
+                if piece.possible_moves.include? movement.map{|x| 1.00 * x / distance}
+                    return true
+                end
             else
                 piece.possible_moves.each do |coord|
                     possible_space = [coord[0] + piece.space[0], coord[1] + piece.space[1]]
@@ -104,6 +109,18 @@ class Game
     def move_piece(piece, space)
         @board.move_piece(piece, space)
         piece.move(space)
+        check?(piece)
+    end
+
+    def get_opposing_king
+        @board.get_king(@player == :white ? :black : :white)
+    end
+
+    def check?(piece)
+        if valid_move?(piece, get_opposing_king.space)
+            puts "\nCheck for #{@player}!"
+            return true
+        end
     end
 end
 
