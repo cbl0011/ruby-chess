@@ -27,6 +27,10 @@ class Piece
     def to_s
         @symbol
     end
+
+    def move(space)
+        @space = space
+    end
 end
 
 class King < Piece

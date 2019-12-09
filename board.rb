@@ -44,6 +44,16 @@ class Board
         return
     end
 
+    def get_piece(coords)
+        @grid[coords[0]][coords[1]]
+    end
+
+    def move_piece(piece, coords)
+        @grid[piece.space[0]][piece.space[1]] = nil
+        @grid[coords[0]][coords[1]] = piece
+        piece
+    end
+
     def to_s
         str = "  ┌───┬───┬───┬───┬───┬───┬───┬───┐\n8 │"
         @grid.each_with_index do |row, i|
