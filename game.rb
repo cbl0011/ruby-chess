@@ -20,7 +20,7 @@ class Game
             return
         else
             @board = Board.new
-            @player = :black    # SHOULD BE :white
+            @player = :white    # SHOULD BE :white
         end
     end
 
@@ -59,6 +59,7 @@ class Game
     end
 
     def space_to_coord(s)
+        s = s.downcase
         begin
             if s.length > 2
                 return nil
@@ -103,7 +104,9 @@ class Game
                 end
             else
                 piece.possible_moves.each do |coord|
+                    puts "Coordinate of possible move: #{coord.to_s}"
                     possible_space = [coord[0] + piece.space[0], coord[1] + piece.space[1]]
+                    puts possible_space.to_s
                     if possible_space == new_space
                         if piece.id == :pawn 
                             if coord[1] != 0
@@ -124,7 +127,6 @@ class Game
 
     def move_piece(piece, space)
         @board.move_piece(piece, space)
-        piece.move(space)
         check?(piece)
     end
 

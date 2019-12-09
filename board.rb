@@ -26,7 +26,7 @@ class Board
         @grid[0][4] = @white_king = King.new(:white, [0,4])
         @grid[0][5] = Bishop.new(:white, [0,5])
         @grid[0][6] = Knight.new(:white, [0,6])
-        @grid[4][5] = Pawn.new(:white, [4,5])
+        @grid[6][6] = Pawn.new(:white, [6,6])
 
         @grid[5][5] = Pawn.new(:black, [5,5])
         @grid[7][1] = Knight.new(:black, [7,1])
@@ -34,7 +34,6 @@ class Board
         @grid[7][3] = Queen.new(:black, [7,3])
         @grid[7][4] = @black_king = King.new(:black, [7,4])
         @grid[7][5] = Bishop.new(:black, [7,5])
-        @grid[7][6] = Knight.new(:black, [7,6])
         @grid[7][7] = Rook.new(:black, [7,7])
     end
 
@@ -73,6 +72,21 @@ class Board
 
         @grid[piece.space[0]][piece.space[1]] = nil
         @grid[coords[0]][coords[1]] = piece
+
+        piece.move([coords[0],coords[1]])
+
+        if piece.id == :pawn
+            if coords[0] == 7 && piece.color == :white
+                @pieces.delete(get_piece([coords[0], coords[1]]))
+                @grid[coords[0]][coords[1]] = promoted = Queen.new(:white, [7, coords[1]])
+                @pieces << promoted
+            elsif coords[0] == 0 && piece.color == :black
+                @pieces.delete(get_piece([coords[0], coords[1]]))
+                @grid[coords[0]][coords[1]] = promoted = Queen.new(:black, [0, coords[1]])
+                @pieces << promoted
+            end
+        end
+
         piece
     end
 
