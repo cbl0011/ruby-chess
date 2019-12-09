@@ -2,9 +2,7 @@
 Command-line chess implemented in Ruby
 
 TODO:
-    - Board
-    - Pieces
-    - Check
+    - Sliding Pieces
     - Checkmate
     - Draw
     - Pawn promotion

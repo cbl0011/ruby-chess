@@ -26,7 +26,7 @@ class Game
 
     def game_loop
         while true
-            puts @board
+            puts "\n#{@board}"
             puts "\n#{@player.capitalize}'s turn!"
             get_spaces
             next_turn
@@ -49,11 +49,13 @@ class Game
         print "Moving #{piece_selected} to space: "
 
         space_input = space_to_coord(gets.chomp)
-        while !(valid_move?(piece_selected, space_input))
-            print "Invalid space!\nMoving #{piece_selected} to space: "
-            space_input = space_to_coord(gets.chomp)
+        if !(valid_move?(piece_selected, space_input))
+            print "\nInvalid move!\n"
+            puts "\nStill #{@player.capitalize}'s turn!"
+            get_spaces
+        else
+            move_piece(piece_selected, space_input)
         end
-        move_piece(piece_selected, space_input)
     end
 
     def space_to_coord(s)
@@ -85,16 +87,30 @@ class Game
         if new_piece.nil? || new_piece.color != @player
             if piece.type == :slide
                 movement = [new_space[0] - old_space[0], new_space[1] - old_space[1]]
+                puts movement.to_s
                 distance = (movement[0].abs > movement[1].abs ? movement[0] : movement[1])
-                if piece.possible_moves.include? movement.map{|x| 1.00 * x / distance}
+                puts distance.to_s
+                movement = movement.map{|x| 1.00 * x / distance.abs}
+                if piece.possible_moves.include? movement
+                    (1..distance.abs - 1).each do |i|
+                        x = old_space[0] + (movement[0] * i)
+                        y = old_space[1] + (movement[1] * i)
+                        if @board.get_piece([x, y])
+                            return false
+                        end
+                    end
                     return true
                 end
             else
                 piece.possible_moves.each do |coord|
                     possible_space = [coord[0] + piece.space[0], coord[1] + piece.space[1]]
                     if possible_space == new_space
-                        if piece.id == :pawn && coord[1] != 0
-                            if new_piece.nil?
+                        if piece.id == :pawn 
+                            if coord[1] != 0
+                                if new_piece.nil?
+                                    return false
+                                end
+                            elsif new_piece
                                 return false
                             end
                         end
@@ -119,8 +135,13 @@ class Game
     def check?(piece)
         if valid_move?(piece, get_opposing_king.space)
             puts "\nCheck for #{@player}!"
+            checkmate?(piece)
             return true
         end
+    end
+
+    def checkmate?(piece)
+        return false
     end
 end
 

@@ -13,9 +13,29 @@ class Board
             @grid = new_board
         else
             @grid = Array.new(SIZE){Array.new(SIZE)}
-            populate
+            populate_testing
         end
         @pieces = @grid.flatten.select {|p| p}
+    end
+
+    def populate_testing
+        @grid[0][0] = Rook.new(:white, [0,0])
+        @grid[0][1] = Knight.new(:white, [0,1])
+        @grid[0][2] = Bishop.new(:white, [0,2])
+        @grid[0][3] = Queen.new(:white, [0,3])
+        @grid[0][4] = @white_king = King.new(:white, [0,4])
+        @grid[0][5] = Bishop.new(:white, [0,5])
+        @grid[0][6] = Knight.new(:white, [0,6])
+        @grid[4][5] = Pawn.new(:white, [4,5])
+
+        @grid[5][5] = Pawn.new(:black, [5,5])
+        @grid[7][1] = Knight.new(:black, [7,1])
+        @grid[7][2] = Bishop.new(:black, [7,2])
+        @grid[7][3] = Queen.new(:black, [7,3])
+        @grid[7][4] = @black_king = King.new(:black, [7,4])
+        @grid[7][5] = Bishop.new(:black, [7,5])
+        @grid[7][6] = Knight.new(:black, [7,6])
+        @grid[7][7] = Rook.new(:black, [7,7])
     end
 
     def populate
@@ -42,7 +62,6 @@ class Board
         (0..7).each do |i|
             @grid[6][i] = Pawn.new(:black, [6,i])
         end
-        return
     end
 
     def get_piece(coords)
@@ -51,7 +70,6 @@ class Board
 
     def move_piece(piece, coords)
         @pieces.delete(get_piece([coords[0], coords[1]]))
-        puts @pieces.map{|x| x.to_s}.to_s
 
         @grid[piece.space[0]][piece.space[1]] = nil
         @grid[coords[0]][coords[1]] = piece
