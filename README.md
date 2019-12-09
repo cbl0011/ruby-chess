@@ -3,6 +3,6 @@ Command-line chess implemented in Ruby
 
 TODO:
     - Checkmate
-    - Draw
-    - Castling
+    - Draw?
+    - Castling?
     - Saving

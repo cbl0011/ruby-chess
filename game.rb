@@ -3,14 +3,9 @@ require './board.rb'
 class Game
     attr_reader :player, :board, :gameover
 
-    def initialize
-        start
-        game_loop
-    end
-
     def start
         @gameover = false
-        puts "Hello, welcome to chess! Use a1-h8 to choose spaces."
+        puts "\nHello, welcome to chess! Use a1-h8 to choose spaces."
 
         # print "New game (1) or load game (2) : "
         # response = gets.chomp
@@ -25,13 +20,18 @@ class Game
     end
 
     def game_loop
+        start
         while true
             puts "\n#{@board}"
             puts "\n#{@player.capitalize}'s turn!"
             get_spaces
+            if @gameover == true
+                puts "\n#{@board}"
+                puts "\nCongrats #{@player}! You win!"
+                return true
+            end
             next_turn
         end
-        return
     end
 
     def next_turn
@@ -88,9 +88,7 @@ class Game
         if new_piece.nil? || new_piece.color != @player
             if piece.type == :slide
                 movement = [new_space[0] - old_space[0], new_space[1] - old_space[1]]
-                puts movement.to_s
                 distance = (movement[0].abs > movement[1].abs ? movement[0] : movement[1])
-                puts distance.to_s
                 movement = movement.map{|x| 1.00 * x / distance.abs}
                 if piece.possible_moves.include? movement
                     (1..distance.abs - 1).each do |i|
@@ -104,9 +102,7 @@ class Game
                 end
             else
                 piece.possible_moves.each do |coord|
-                    puts "Coordinate of possible move: #{coord.to_s}"
                     possible_space = [coord[0] + piece.space[0], coord[1] + piece.space[1]]
-                    puts possible_space.to_s
                     if possible_space == new_space
                         if piece.id == :pawn 
                             if coord[1] != 0
@@ -126,6 +122,9 @@ class Game
     end
 
     def move_piece(piece, space)
+        if @board.get_piece(space) && @board.get_piece(space).id == :king
+            @gameover = true
+        end
         @board.move_piece(piece, space)
         check?(piece)
     end
@@ -147,6 +146,4 @@ class Game
     end
 end
 
-game = Game.new
-
-puts game.game_loop
+Game.new.game_loop
